@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: play-hextile
+  labels:
+    app: play-hextile
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: play-hextile
+  template:
+    metadata:
+      labels:
+        app: play-hextile
+    spec:
+      containers:
+      - name: play-hextile
+        image: zihao/play:hextile
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: play-hextile
+  labels:
+    app: play-hextile
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: play-hextile
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: play-hextile
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    certmanager.k8s.io/issuer: "letsencrypt-prod"
+    certmanager.k8s.io/acme-challenge-type: http01
+spec:
+  tls:
+  - hosts:
+    - play-hextile.cloud.zihao.me
+    secretName: play-hextile-tls
+  rules:
+  - host: play-hextile.cloud.zihao.me
+    http:
+      paths:
+      - backend:
+          serviceName: play-hextile
+          servicePort: 80
+        path: /
