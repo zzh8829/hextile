@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "hextile",
   "scripts": {
-    "start": "webpack-dev-server --open",
-    "server": "babel-node src/server/index.js"
+    "start": "webpack-dev-server --open --config webpack.dev.babel.js",
+    "server": "babel-node src/server/server.js",
+    "build": "webpack --config webpack.prod.babel.js",
+    "deploy": "./deploy/deploy.sh"
   },
   "license": "MIT",
   "dependencies": {
@@ -20,6 +22,7 @@
     "css-loader": "^2.1.1",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack-dev-server": "^3.4.1",
+    "webpack-merge": "^4.2.1"
   }
 }

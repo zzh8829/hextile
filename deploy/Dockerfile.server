@@ -1,0 +1,10 @@
+FROM node:12
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
+
+COPY package.json yarn.lock ./
+RUN yarn
+COPY . ./
+
+EXPOSE 12398
+CMD ["yarn", "server"]

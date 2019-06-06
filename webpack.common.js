@@ -1,13 +1,8 @@
 import path from "path";
 
 export default {
-    mode: 'development',
     entry: {
-        client: ["./src/client/index.js"]
-    },
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist'
+        client: ["./src/client/client.js"]
     },
     output: {
         path: path.resolve(__dirname, "dist"),
